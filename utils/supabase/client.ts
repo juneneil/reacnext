@@ -1,20 +1,12 @@
-// import { createBrowserClient } from "@supabase/ssr";
+import { createClient } from '@supabase/supabase-js';
 
-// export const createClient = () =>
-//   createBrowserClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-//   );
+// Ensure these values are available as environment variables
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error("supabaseUrl or supabaseKey is missing");
+}
 
-// utils/supabase/client.ts
-
-// utils/supabase/client.ts
-
-import { createClient } from '@supabase/supabase-js';  // Use createClient directly
-
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+export const supabase = createClient(supabaseUrl, supabaseKey);
 

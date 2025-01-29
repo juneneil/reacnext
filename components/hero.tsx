@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { InfoIcon } from "lucide-react";
 
-// Define the Todo type
 interface Todo {
   id: string;
   task: string;
@@ -11,7 +10,7 @@ interface Todo {
 }
 
 export default function ProtectedPage() {
-  const [todos, setTodos] = useState<Todo[]>([]); // Specify Todo type for the todos state
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [newTask, setNewTask] = useState<string>("");
   const [isClient, setIsClient] = useState(false);
 
@@ -47,7 +46,7 @@ export default function ProtectedPage() {
       },
     });
 
-    const newTodo: Todo = await res.json(); // Type the response as Todo
+    const newTodo: Todo = await res.json();
     setTodos([...todos, newTodo]);
     setNewTask("");
   };
@@ -61,7 +60,7 @@ export default function ProtectedPage() {
       },
     });
 
-    const updatedTodo: Todo = await res.json(); // Type the response as Todo
+    const updatedTodo: Todo = await res.json();
     setTodos(todos.map(todo => (todo.id === id ? updatedTodo : todo)));
   };
 
