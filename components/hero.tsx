@@ -1,61 +1,18 @@
-// import NextLogo from "./next-logo";
-// import SupabaseLogo from "./supabase-logo";
-
-// export default function Header() {
-//   return (
-//     <div className="flex flex-col gap-16 items-center">
-//       <div className="flex gap-8 justify-center items-center">
-//         <a
-//           href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-//           target="_blank"
-//           rel="noreferrer"
-//         >
-//           <SupabaseLogo />
-//         </a>
-//         <span className="border-l rotate-45 h-6" />
-//         <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
-//           <NextLogo />
-//         </a>
-//       </div>
-//       <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
-//       <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
-//         The fastest way to build apps with{" "}
-//         <a
-//           href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-//           target="_blank"
-//           className="font-bold hover:underline"
-//           rel="noreferrer"
-//         >
-//           Supabase
-//         </a>{" "}
-//         and{" "}
-//         <a
-//           href="https://nextjs.org/"
-//           target="_blank"
-//           className="font-bold hover:underline"
-//           rel="noreferrer"
-//         >
-//           Next.js
-//         </a>
-//       </p>
-//       <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
-//     </div>
-//   );
-// }
-
-
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
 import { InfoIcon } from "lucide-react";
 
+// Define the Todo type
+interface Todo {
+  id: string;
+  task: string;
+  completed: boolean;
+}
+
 export default function ProtectedPage() {
-  const [todos, setTodos] = useState([]);
-  const [newTask, setNewTask] = useState("");
+  const [todos, setTodos] = useState<Todo[]>([]); // Specify Todo type for the todos state
+  const [newTask, setNewTask] = useState<string>("");
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -90,7 +47,7 @@ export default function ProtectedPage() {
       },
     });
 
-    const newTodo = await res.json();
+    const newTodo: Todo = await res.json(); // Type the response as Todo
     setTodos([...todos, newTodo]);
     setNewTask("");
   };
@@ -104,7 +61,7 @@ export default function ProtectedPage() {
       },
     });
 
-    const updatedTodo = await res.json();
+    const updatedTodo: Todo = await res.json(); // Type the response as Todo
     setTodos(todos.map(todo => (todo.id === id ? updatedTodo : todo)));
   };
 
@@ -162,11 +119,11 @@ export default function ProtectedPage() {
           <p>No todos available</p>
         ) : (
           <ul className="mt-4">
-            {todos.map((todo: { id: string; task: string; completed: boolean }) => (
+            {todos.map((todo: Todo) => (
               todo ? (
                 <li key={todo.id} className="flex justify-between items-center shadow-sm mb-2 p-2 rounded">
                   <span
-                    className={`text-lg ${!!todo.completed ? 'line-through text-gray-400' : ''}`}
+                    className={`text-lg ${todo.completed ? 'line-through text-gray-400' : ''}`}
                   >
                     {todo.task}
                   </span>
